@@ -420,7 +420,7 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
     @Body("refreshToken") refreshTokenFromBody?: string,
   ): Promise<CommonApiResponse<{ accessToken: string }>> {
-    const isProd = this.configService.get("NODE_ENV") === "production";
+    const isProd = this.configService.get("NODE_ENV") === "production" || "development";
     let refreshToken = isProd
       ? (req.cookies?.refreshToken ?? refreshTokenFromBody)
       : req.headers["refresh-token"];
