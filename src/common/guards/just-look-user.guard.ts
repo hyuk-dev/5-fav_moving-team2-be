@@ -13,7 +13,7 @@ export class JustLookUserGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
 
     // production 환경인지 체크
-    const isProd = this.configService.get("NODE_ENV") === "production";
+    const isProd = this.configService.get("NODE_ENV") === "production" || "development";
     let accessToken: string | undefined;
 
     if (isProd) {

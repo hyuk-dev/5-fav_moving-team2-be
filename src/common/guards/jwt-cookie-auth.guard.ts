@@ -19,7 +19,7 @@ export class JwtCookieAuthGuard implements CanActivate {
     let accessToken = request.headers["access-token"];
 
     // production 환경인지 체크
-    const isProd = this.configService.get("NODE_ENV") === "production";
+    const isProd = this.configService.get("NODE_ENV") === "production" || "development";
 
     if (isProd) {
       accessToken = request.cookies?.accessToken;
