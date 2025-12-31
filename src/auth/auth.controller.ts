@@ -420,10 +420,12 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
     @Body("refreshToken") refreshTokenFromBody?: string,
   ): Promise<CommonApiResponse<{ accessToken: string }>> {
-    const isProd = this.configService.get("NODE_ENV") === "production" || "development";
-    let refreshToken = isProd
-      ? (req.cookies?.refreshToken ?? refreshTokenFromBody)
-      : req.headers["refresh-token"];
+    const isProd = this.configService.get("NODE_ENV") === "production";
+    // 쿠키/바디 우선, 없으면 헤더도 허용
+    let refreshToken =
+      req.cookies?.refreshToken ??
+      refreshTokenFromBody ??
+      req.headers["refresh-token"];
 
     if (Array.isArray(refreshToken)) {
       refreshToken = refreshToken[0];
